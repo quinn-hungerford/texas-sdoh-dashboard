@@ -28,26 +28,26 @@ Our dashboard integrates publicly available datasets from:
 ---
 
 ## Approach  
-Our workflow combined data cleaning, exploratory analysis, and predictive modeling:
-- **Data Cleaning & Integration:** Combined SDOH indicators from AHRQ (2010, 2015, 2020) with county premature death rates from FRED. Cleaned columns, collapsed poverty rates into one measure, and standardized variable names. Exported final datasets (*_Final.csv).
-- **Feature Engineering:** Outcome variable created from mortality rates using Min–Max scaling and weights (lower death rates = higher health). Decided based on research into similar studies to weight it as follows -- 0.6*(Premature Death Rate) + 0.3*(Injury Death Rate) + 0.1*(Self-Harm Death Rate). Normalized for county comparison.
-- **SDOH Categorization:** Grouped variables into the five SDOH (Economic, Education, Healthcare, Neighborhood, Community). For each county, calculated the category most atypical (largest z-scores) as the “Most Influential SDOH” dragging the Adult Health Score more different directions.
-- **Building Dashboard (Using Plotly Dash):**
-  - **First Section:** Built two choropleth maps, both interactive with hover tooltips, time slider (2010–2020), and county-level breakdowns:
-     - Adult Health Score by County: Color-coded health outcomes across Texas (from green/good to red/worse), with donut chart showing each SDOH’s contribution for a selected count).
-     - Most Influential SDOH by County: Map colored by most influential SDOH category per county, with same donut chart.
-  - **Second Section:** Explored SDOH relationships with two different plots, described below.
-     - Variable vs. Health Outcome Scatterplot: Select any SDOH variable within a category to see its relationship with Adult Health Score across all Texas counties, displayed as a scatterplot with a regression line. Quick view of which factors are positively/negatively associated with health outcomes.
-     - Correlation Matrix Heatmap: Select an SDOH category to view how its variables correlate with one another and with variables from other SDOH categories to identify hidden relationships.
-  - **Third Section:** Predictive modeling
-    - Trained a Random Forest regression model to predict county-level Adult Health Scores. The five highest-importance SDOH predictors (median household income, uninsured rate, graduate degree rate, elderly living alone, median home value) were used as interactive sliders in the dashboard to let users test what-if scenarios and see how policy interventions might impact overall health outcomes.
+- **Data Cleaning & Integration:** Combined SDOH indicators from AHRQ (2010, 2015, 2020) with premature death rates from FRED, standardized variable names, and exported cleaned datasets.
+- **Feature Engineering:** Constructed an outcome variable (Adult Health Score) using weighted mortality rates, normalized for county comparison: 0.6*(Premature Death Rate) + 0.3*(Injury Death Rate) + 0.1*(Self-Harm Death Rate). Normalized for county comparison.
+- **SDOH Categorization:** Grouped indicators into CDC’s five SDOH categories. Identified the “Most Influential SDOH” for each county based on z-scores.
+- **Building Dashboard:** Built three sections in Plotly Dash.
+  - Choropleth Maps: Adult Health Score + Most Influential SDOH by county with interactive hover tooltips, a time slider, and county-level pie charts.
+  - Scatterplots & Correlation Heatmaps: Exploring relationships between SDOH variables and health outcomes, as well as correlations between SDOH variables.
+  - Predictive Modeling: Trained a Random Forest regression model to predict county-level Adult Health Scores. The five highest-importance SDOH predictors were used as interactive sliders to let users test what-if scenarios and see how policy interventions might impact overall health outcomes.
+
+---
+
+## Geospatial Information
+
+All maps are rendered at the Texas county level. County boundaries are provided through Plotly’s mapping utilities and aligned by FIPS codes in the AHRQ/FRED datasets to ensure consistent spatial joins across datasets and accurate year-to-year comparisons. All interactivity (hover, tooltips, sliders) is allowed using Plotly’s built-in geographic functions.
 
 ---
 
 ## Key Findings  
-- **Economic stability and healthcare access** consistently emerged as the strongest predictors of adult health in Texas.  
-- Some counties showed **substantial health improvements from 2010 → 2020**, while others declined, often correlating with shifts in SDOH variables, specifically unemployment and access to care.  
-- Machine learning results indicated that **RandomForest models achieved strong predictive accuracy**, capturing complex, non-linear interactions among SDOH variables with strong predictive accuracy (RMSE = 0.12). This suggests such models can help policymakers identify the most impactful levers and set goals for improving community health.
+- **Economic stability and healthcare access** consistently emerged as the strongest predictors of adult health in Texas.
+- Several counties experienced major health gains from 2010 to 2020, while others experienced declines, often correlating with shifts in unemployment and healthcare access.
+- The **Random Forest regression model achieved strong predictive accuracy** (RMSE = 0.12), showing that machine learning can identify non-linear SDOH interactions and support evidence-based policymaking to improve community health. 
 
 ---
 
@@ -63,6 +63,18 @@ Our workflow combined data cleaning, exploratory analysis, and predictive modeli
   - `screenshots/` → Key dashboard views (4 images)
 
 ---
+
+## Reproducibility
+
+To reproduce or extend our analysis:
+- Clone this repository and install required packages:
+    - pip install pandas plotly dash scikit-learn
+- Use the cleaned datasets in /data (*_Final.csv) for immediate analysis.
+- To fully regenerate datasets and models, run:
+    - code/P08_FinalProjectJupyterNotebook.ipynb (data cleaning, feature engineering, modeling)
+- Launch the dashboard locally with:
+    - python code/texas_dashboard.py
+- Then open the local URL in your browser to view the dashboard.
 
 ## Team Members  
 - Quinn Hungerford  
