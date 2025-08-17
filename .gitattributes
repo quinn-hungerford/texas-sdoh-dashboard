@@ -1,0 +1,2 @@
+# Tell GitHub Linguist how to classify files
+*.ipynb linguist-language=Python
