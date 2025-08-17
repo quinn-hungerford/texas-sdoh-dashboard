@@ -59,7 +59,7 @@ Our workflow combined data cleaning, exploratory analysis, and predictive modeli
   - `SDOH_2010.xlsx`, `SDOH_2015.xlsx`, `SDOH_2020.xlsx`, `TX_County_Premature_Death_Rate.xlsx` → Original raw datasets  
   - `SDOH_2010_Final.csv`, `SDOH_2015_Final.csv`, `SDOH_2020_Final.csv` → Cleaned, ready-to-use datasets (don't need to run EDA if you download these) 
 - `presentation/`
-  - `dashboard_demo.mov` → Walkthrough video of the dashboard
+  - `dashboard_demo.mp4` → Walkthrough video of the dashboard
   - `screenshots/` → Key dashboard views (4 images)
 
 ---
